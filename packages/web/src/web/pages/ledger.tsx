@@ -59,7 +59,7 @@ export default function LedgerPage({ saveId }: { saveId: number }) {
       {note && <p className="mb-4 text-[13px] text-gold">{note}</p>}
 
       {tab === "market" && (
-        <div className="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-[1fr_300px]">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-[1fr_300px] lg:items-start">
           <Panel className="overflow-hidden">
             <PanelHead title="Market" meta={`${d.market.length} lines at ${d.at.name}`} right={d.shock !== 0 ? <Tag color={d.shock > 0 ? "#b23327" : "#7d9b7a"}>shock {d.shock > 0 ? "+" : ""}{Math.round(d.shock * 100)}%</Tag> : undefined} />
             <div className="divide-y divide-line-soft">

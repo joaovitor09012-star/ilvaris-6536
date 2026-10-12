@@ -16,6 +16,9 @@ type Rect = { x: number; y: number; w: number; h: number };
 const PAD = 8;
 const GAP = 64;
 const CARD_W = 372;
+const TIGHT = 28;
+
+const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 
 function measure(target?: string): Rect | null {
   if (!target) return null;
@@ -40,10 +43,16 @@ function choosePlacement(r: Rect, pref: TourStep["placement"], vw: number, vh: n
   if (fitsSide("left")) return "left";
   if (fitsVert("bottom")) return "bottom";
   if (fitsVert("top")) return "top";
+  // tall targets: accept a shorter pointer rather than covering the target
+  if (room.right >= CARD_W + TIGHT + 16) return "right";
+  if (room.left >= CARD_W + TIGHT + 16) return "left";
   return "inside";
 }
 
-const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
+/** the gap actually used on a side: full GAP when it fits, shrunk down to TIGHT otherwise */
+function sideGap(room: number) {
+  return clamp(room - CARD_W - 16, TIGHT, GAP);
+}
 
 export function Tour({ steps, onClose }: { steps: TourStep[]; onClose: (finished: boolean) => void }) {
   const [i, setI] = useState(0);
@@ -107,8 +116,8 @@ export function Tour({ steps, onClose }: { steps: TourStep[]; onClose: (finished
     const place = choosePlacement(rect, step.placement, vp.w, vp.h, cardH);
     const cx = rect.x + rect.w / 2;
     const cy = rect.y + rect.h / 2;
-    if (place === "right") card = { x: rect.x + rect.w + GAP, y: clamp(cy - cardH / 2, 16, vp.h - cardH - 16) };
-    else if (place === "left") card = { x: rect.x - GAP - CARD_W, y: clamp(cy - cardH / 2, 16, vp.h - cardH - 16) };
+    if (place === "right") card = { x: rect.x + rect.w + sideGap(vp.w - rect.x - rect.w), y: clamp(cy - cardH / 2, 16, vp.h - cardH - 16) };
+    else if (place === "left") card = { x: rect.x - sideGap(rect.x) - CARD_W, y: clamp(cy - cardH / 2, 16, vp.h - cardH - 16) };
     else if (place === "bottom") card = { x: clamp(cx - CARD_W / 2, 16, vp.w - CARD_W - 16), y: rect.y + rect.h + GAP };
     else if (place === "top") card = { x: clamp(cx - CARD_W / 2, 16, vp.w - CARD_W - 16), y: rect.y - GAP - cardH };
     else card = { x: clamp(cx - CARD_W / 2, 16, vp.w - CARD_W - 16), y: clamp(rect.y + 24, 16, vp.h - cardH - 16) };

@@ -4,6 +4,7 @@ import { Loading, Panel, PanelHead, RankChip, SectionHeader, Tag, Meter, Empty }
 import { useCodex, useAllocate, useEquipSkill } from "../queries/codex";
 import { usePlayerPortrait } from "../queries/media";
 import { cn } from "../lib/utils";
+import { classArt } from "../components/ornament";
 
 const STAT_KEYS = ["str", "agi", "vit", "int", "wis", "cha", "luk"] as const;
 const SOURCE_LABEL: Record<string, string> = {
@@ -78,9 +79,7 @@ export default function CodexPage({ saveId }: { saveId: number }) {
               ) : portrait.data?.url ? (
                 <img src={portrait.data.url} alt={character.name} className="h-full w-full object-cover" />
               ) : (
-                <div className="flex h-full items-center justify-center px-4 text-center">
-                  <span className="micro text-paper-3">No plate yet</span>
-                </div>
+                <img src={classArt(character.classId)} alt={character.name} className="h-full w-full object-cover" />
               )}
             </div>
             <div className="border-t border-line p-3.5">

@@ -42,7 +42,10 @@ export function useRegeneratePortrait(_saveId: number | null) {
   const qc = useQueryClient();
   return useMutation(
     orpc.media.npcPortrait.mutationOptions({
-      onSuccess: () => qc.invalidateQueries({ queryKey: orpc.media.key() }),
+      onSuccess: () => {
+        void qc.invalidateQueries({ queryKey: orpc.media.key() });
+        void qc.invalidateQueries({ queryKey: orpc.threads.key() });
+      },
     }),
   );
 }

@@ -42,7 +42,7 @@ export default function BestiaryPage({ saveId }: { saveId: number }) {
         }
       />
 
-      <div className="mb-6 grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-[1fr_300px]">
+      <div className="mb-6 grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-[1fr_300px] lg:items-start">
         <Panel className="overflow-hidden">
           <PanelHead
             title={`Standing in ${d.here.name}`}

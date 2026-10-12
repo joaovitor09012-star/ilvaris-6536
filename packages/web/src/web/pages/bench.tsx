@@ -71,7 +71,7 @@ export default function BenchPage({ saveId }: { saveId: number }) {
         <Stat k="Research bonus" v={`+${Math.round(d.researchBonus * 100)}%`} />
       </div>
 
-      <div className="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-[1fr_360px]">
+      <div className="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-[1fr_360px] lg:items-start">
         <div className="space-y-6">
           <Panel className="overflow-hidden">
             <PanelHead

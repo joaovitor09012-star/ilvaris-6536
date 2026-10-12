@@ -89,9 +89,9 @@ export function PanelHead({
 }) {
   return (
     <div className={cn("flex items-center justify-between gap-3 border-b border-line px-5 py-3", className)}>
-      <div className="flex items-baseline gap-2.5 min-w-0">
-        <span className="display text-[12.5px] uppercase tracking-[0.16em] text-gold-bright">{title}</span>
-        {meta && <span className="micro truncate">{meta}</span>}
+      <div className="flex min-w-0 flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+        <span className="display whitespace-nowrap text-[12.5px] uppercase tracking-[0.16em] text-gold-bright">{title}</span>
+        {meta && <span className="micro">{meta}</span>}
       </div>
       {right}
     </div>

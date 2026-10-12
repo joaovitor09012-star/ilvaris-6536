@@ -56,7 +56,7 @@ export default function WorldPage({ saveId }: { saveId: number }) {
       {note && <p className="mb-4 text-[13px] text-gold">{note}</p>}
 
       {tab === "bible" && (
-        <div className="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-[1fr_290px]">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-[1fr_290px] lg:items-start">
           <div className="space-y-8">
             {l.categories.map((c) => {
               const rows = l.entries.filter((e) => e.category === c.category);
@@ -152,7 +152,7 @@ export default function WorldPage({ saveId }: { saveId: number }) {
             <Loading label="Consulting the director's board" />
           ) : (
             <>
-              <div className="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-[1fr_320px]">
+              <div className="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-[1fr_320px] lg:items-start">
                 <div className="space-y-4">
                   {arcs.data.global.map((g) => {
                     const known = g.premise !== "";

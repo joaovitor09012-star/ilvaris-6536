@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { ImagePlus, Loader2, UserRound } from "lucide-react";
+import { ImagePlus, Loader2 } from "lucide-react";
+import { CompassRose, FrameOver } from "../components/ornament";
 import { Loading, Panel, PanelHead, SectionHeader, Disposition, Dot, Tag, Empty, KeyValue } from "../components/ui-kit";
 import { useThreads } from "../queries/threads";
 import { useRegeneratePortrait } from "../queries/media";
@@ -40,23 +41,32 @@ export default function ThreadsPage({ saveId }: { saveId: number }) {
         {d.threads.map((t) => {
           const color = STATE_COLOR[t.state] ?? "#8b8778";
           const expanded = openId === t.threadId;
+          const drawingThis = draw.isPending && draw.variables?.npcId === t.npcId;
           return (
-            <div key={t.id} className={cn("panel overflow-hidden", expanded && "border-rule-dim")}>
+            <div key={t.id} className={cn("panel relative overflow-hidden", expanded && "border-rule-dim")}>
+              <FrameOver soft />
               <div className="relative aspect-[4/5] w-full overflow-hidden bg-ink">
                 {t.portraitKey ? (
                   <img src={`/api/media/${t.portraitKey}`} alt={t.name} className="h-full w-full object-cover" />
                 ) : (
-                  <div className="flex h-full flex-col items-center justify-center gap-3 px-5 text-center">
-                    <UserRound className="size-6 text-paper-3" />
-                    <span className="micro text-paper-3">No plate drawn</span>
-                    <button
-                      className="btn btn-sm"
-                      disabled={draw.isPending}
-                      onClick={() => draw.mutate({ saveId, npcId: t.npcId, regenerate: true })}
-                    >
-                      {draw.isPending ? <Loader2 className="size-3 animate-spin" /> : <ImagePlus className="size-3" />}
-                      Draw them
-                    </button>
+                  <div className="relative h-full">
+                    <img src="/art/hero-sm.jpg" alt="" aria-hidden className="absolute inset-0 h-full w-full scale-110 object-cover opacity-25 blur-[2px] grayscale-[40%]" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/70 to-ink" />
+                    <div className="relative flex h-full flex-col items-center px-6 pt-10 text-center">
+                      <CompassRose size={22} className="opacity-70" />
+                      <div className="engraved mt-3 text-[88px] leading-none">
+                        {t.name.charAt(0)}
+                      </div>
+                      <p className="mt-3 line-clamp-3 max-w-[30ch] text-[13px] italic leading-snug text-paper-3">{t.appearance}</p>
+                      <button
+                        className="btn btn-sm mt-4"
+                        disabled={drawingThis}
+                        onClick={() => draw.mutate({ saveId, npcId: t.npcId, regenerate: true })}
+                      >
+                        {drawingThis ? <Loader2 className="size-3 animate-spin" /> : <ImagePlus className="size-3" />}
+                        {drawingThis ? "Drawing…" : "Draw their plate"}
+                      </button>
+                    </div>
                   </div>
                 )}
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink via-ink/85 to-transparent px-4 pb-3 pt-10">

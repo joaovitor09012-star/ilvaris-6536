@@ -64,7 +64,7 @@ export default function TimelinePage({ saveId }: { saveId: number }) {
       </div>
 
       {tab === "causes" && (
-        <div className="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-[1fr_300px]">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-[1fr_300px] lg:items-start">
           <Panel className="overflow-hidden">
             <PanelHead title="The chain" meta="newest first" right={<Scroll className="size-3.5 text-paper-3" />} />
             {t.events.length === 0 ? (
@@ -134,7 +134,7 @@ export default function TimelinePage({ saveId }: { saveId: number }) {
       )}
 
       {tab === "chapters" && (
-        <div className="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-[290px_1fr]">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-[290px_1fr] lg:items-start">
           <Panel className="overflow-hidden">
             <PanelHead title="Chapters" meta={`${t.chapters.length}`} />
             {t.chapters.length === 0 ? (
