@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+  <defs>
+    <g id="c" fill="none" stroke="#a88a4e">
+      <path d="M2.5 12 V2.5 H12" stroke-width="1.1"/>
+    </g>
+  </defs>
+  <rect x="2.5" y="2.5" width="55" height="55" fill="none" stroke="#3b2f22" stroke-width="1"/>
+  <use href="#c"/>
+  <use href="#c" transform="translate(60 0) scale(-1 1)"/>
+  <use href="#c" transform="translate(0 60) scale(1 -1)"/>
+  <use href="#c" transform="translate(60 60) scale(-1 -1)"/>
+</svg>
