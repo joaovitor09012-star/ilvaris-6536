@@ -183,13 +183,30 @@ export function Tile({
 
 /* ─────────────────────────────────────────────── disposition bars */
 
+/** trust runs −100…+100 and fills from the centre; the rest run 0…100 and fill from the left */
 const DISPOSITION_KEYS = [
-  { key: "trust", label: "Trust", color: "#7d9b7a" },
-  { key: "desire", label: "Desire", color: "#b23327" },
-  { key: "fear", label: "Fear", color: "#8a6fc4" },
-  { key: "debt", label: "Debt", color: "#c9a227" },
-  { key: "grudge", label: "Grudge", color: "#d97b2b" },
+  { key: "trust", label: "Trust", color: "#7d9b7a", bipolar: true },
+  { key: "desire", label: "Desire", color: "#b23327", bipolar: false },
+  { key: "fear", label: "Fear", color: "#8a6fc4", bipolar: false },
+  { key: "debt", label: "Debt", color: "#c9a227", bipolar: false },
+  { key: "grudge", label: "Grudge", color: "#d97b2b", bipolar: false },
 ] as const;
+
+/** A centre-origin meter: positive fills right of the midline, negative fills left in `negColor`. */
+function BipolarMeter({ value, color, negColor = "#b23327", className = "" }: { value: number; color: string; negColor?: string; className?: string }) {
+  const pct = Math.min(100, Math.abs(value)) / 2; // half the bar per side
+  return (
+    <div className={cn("meter relative", className)}>
+      <span aria-hidden className="absolute inset-y-0 left-1/2 w-px bg-[#2a2118]" />
+      {value !== 0 && (
+        <i
+          className="absolute inset-y-0"
+          style={{ width: `${pct}%`, background: value > 0 ? color : negColor, left: value > 0 ? "50%" : `${50 - pct}%` }}
+        />
+      )}
+    </div>
+  );
+}
 
 export function Disposition({
   disposition,
@@ -204,7 +221,11 @@ export function Disposition({
       {rows.map((r) => (
         <div key={r.key} className="flex items-center gap-2.5">
           <span className="micro w-[52px] flex-none">{r.label}</span>
-          <Meter value={r.value + 100} max={200} color={r.color} className="flex-1" />
+          {r.bipolar ? (
+            <BipolarMeter value={r.value} color={r.color} className="flex-1" />
+          ) : (
+            <Meter value={Math.max(0, r.value)} max={100} color={r.color} className="flex-1" />
+          )}
           <span className="mono w-[34px] flex-none text-right text-[11px] text-paper-2">{r.value > 0 ? `+${r.value}` : r.value}</span>
         </div>
       ))}

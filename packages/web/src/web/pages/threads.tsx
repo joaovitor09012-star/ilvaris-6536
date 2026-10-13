@@ -105,7 +105,9 @@ export default function ThreadsPage({ saveId }: { saveId: number }) {
                     </div>
                     <div className="panel-quiet p-3">
                       <div className="micro mb-1">The fate written before you arrived</div>
-                      <p className="text-[13px] italic leading-relaxed text-paper-2">{t.fate}</p>
+                      <p className="text-[13px] italic leading-relaxed text-paper-2">
+                        {t.fate ?? "Not yet known. Whatever is written there, no one has let you read it."}
+                      </p>
                     </div>
                     {t.disposition.note && (
                       <div>

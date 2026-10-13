@@ -147,9 +147,9 @@ export default function BiblePage() {
   return (
     <div>
       <PageTitle
-        eyebrow="Out-of-world reference"
+        eyebrow="From the Athenaeum's open stacks"
         title="The World Bible"
-        subtitle="The truth of Ilvaris, written for the one holding the pen. Read it in any order — or not at all; the story teaches everything it needs to."
+        subtitle="An encyclopedia of the known world, kept for first-years. Read it in any order — or not at all; Ilvaris teaches everything it needs to, eventually."
         right={
           <div className="text-right">
             <div className="label-col">Length</div>
@@ -191,8 +191,8 @@ export default function BiblePage() {
           <div className="mt-4 flex gap-3 border border-rule-dim bg-[#1a0d0c] p-3.5 text-[14px] leading-snug text-paper-2">
             <BookLock className="mt-0.5 size-4 shrink-0 text-rule" strokeWidth={1.6} />
             <span>
-              <span className="display text-[11px] tracking-[0.14em] text-paper">Sealed from the world.</span> No character can
-              read this page, and nothing here is ever told to them. What they know, they learned in the story.
+              <span className="display text-[11px] tracking-[0.14em] text-paper">Common learning.</span> What is written here is
+              what the Athenaeum teaches. Some of it is incomplete. The rest you will have to find.
             </span>
           </div>
         </aside>

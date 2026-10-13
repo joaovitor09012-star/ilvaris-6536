@@ -104,7 +104,12 @@ export default function SettingsPage({ saveId }: { saveId: number }) {
               </p>
               <p className="text-paper-3">
                 Every character in Ilvaris is an adult — the Athenaeum admits at nineteen — and some lines are never crossed,
-                whatever is asked.
+                whatever is asked: nothing sexual involving minors, and sexual violence is never framed as desirable. Intimacy,
+                when it happens, is with adults who have come to trust you.
+              </p>
+              <p className="text-paper-3">
+                Violence has weight. Death is permanent, and the story does not look away from it — nor linger on it for its
+                own sake.
               </p>
             </div>
           </Panel>

@@ -5,7 +5,7 @@ import { base } from "../__core/app";
 import { db } from "../database";
 import * as s from "../database/schema";
 import { loadGame } from "../game/state";
-import { threadView, npcView } from "../game/view";
+import { threadView, npcView, isFateRevealed } from "../game/view";
 import { THREADS, NPCS, getNpcTemplate } from "../world/npcs";
 import { getLocation } from "../world/map";
 
@@ -102,7 +102,7 @@ export const threads = {
   fates: base.input(z.object({ saveId: z.number() })).handler(async ({ input }) => {
     const state = await loadGame(input.saveId);
     return state.threads.map((t) => {
-      const revealed = t.state === "resolved" || t.state === "severed" || t.state === "revised" || t.progress >= 100;
+      const revealed = isFateRevealed(t);
       return {
         npcId: t.npcId,
         name: t.name,

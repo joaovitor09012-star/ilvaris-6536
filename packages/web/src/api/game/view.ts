@@ -235,7 +235,9 @@ export interface ThreadView {
   npcId: string;
   name: string;
   role: string;
-  fate: string;
+  /** the written fate — null until the thread closes (see isFateRevealed) */
+  fate: string | null;
+  fateRevealed: boolean;
   state: string;
   progress: number;
   resolution: string | null;
@@ -244,6 +246,15 @@ export interface ThreadView {
   appearance: string;
   voice: string;
   disposition: { trust: number; fear: number; debt: number; desire: number; grudge: number; note: string };
+}
+
+/**
+ * A thread's written fate is world truth. The player may read it only once the thread has
+ * closed — resolved, severed, revised, or carried to 100%. Every public view goes through this;
+ * the director and narrator read `state.threads` directly and are unaffected.
+ */
+export function isFateRevealed(row: { state: string; progress: number }) {
+  return row.state === "resolved" || row.state === "severed" || row.state === "revised" || row.progress >= 100;
 }
 
 export function threadView(state: GameState, row: typeof s.threads.$inferSelect): ThreadView {
@@ -256,7 +267,8 @@ export function threadView(state: GameState, row: typeof s.threads.$inferSelect)
     npcId: row.npcId,
     name: row.name,
     role: row.role,
-    fate: row.fate,
+    fate: isFateRevealed(row) ? row.fate : null,
+    fateRevealed: isFateRevealed(row),
     state: row.state,
     progress: row.progress,
     resolution: row.resolution,
